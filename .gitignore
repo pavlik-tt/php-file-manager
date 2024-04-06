@@ -1,0 +1,4 @@
+testfile.py
+request*
+uploads/*
+.DS_Store

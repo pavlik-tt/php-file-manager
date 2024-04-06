@@ -1,3 +1,9 @@
+<?php
+    // Config
+    $metadata_path = dirname(__FILE__).'/.metadata';
+    $uploads_path = dirname(__FILE__).'/uploads';
+    $ignore_upload_path = true; // Always upload files to the $uploads_path.
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +13,39 @@
 </head>
 <body>
     <?php
-        $path = $_GET['path'];
+        function random_hex_string($length = 10) {
+            $result = "";
+            for ($i=0; $i < $length; $i++) { 
+                $hexbyte = random_int(0,255);
+                if ($hexbyte < 16)
+                    $result .= "0"+dechex($hexbyte);
+                else
+                    $result .= dechex($hexbyte);
+            }
+            return $result;
+        }
+        function upload_file($file, $path): bool {
+            global $metadata_path, $uploads_path, $ignore_upload_path;
+            $upload_path = "";
+            if ($ignore_upload_path || $path == '')
+            {
+                $upload_path = $uploads_path . "/" . $file['name'][0];
+                move_uploaded_file($file['tmp_name'][0], $upload_path);
+                return;
+            }else{
+                if (is_dir($path)) {
+                    $upload_path = $path . "/" . $file['name'][0];
+                } else {
+                    $upload_path = $path;
+                }
+            }
+            var_dump($file['tmp_name']);
+            return move_uploaded_file($file['tmp_name'][0], $upload_path);
+        }
+        if (isset($_GET['path']))
+            $path = $_GET['path'];
+        else
+            $path = '';
         $method = $_SERVER['REQUEST_METHOD'];
         $action = '';
 
@@ -21,14 +59,17 @@
 
         if ($method == 'POST')
         {
-            $entityBody = file_get_contents('php://input');
-            var_dump($entityBody);
+            $result = [];
+            if (!is_dir($path)) {
+                $path = basename($path);
+            }
+            foreach ($_FILES as $file) {
+                $result[] = upload_file($file, $path);
+            }
         }else{
             echo '<form action="" method="post" enctype="multipart/form-data">';
-            echo '<p>File upload form:';
-            echo '<input type="file" name="pictures[]" />';
-            echo '<input type="file" name="pictures[]" />';
-            echo '<input type="file" name="pictures[]" />';
+            echo '<p>File upload form:<br/>';
+            echo '<input type="file" name="pictures[]" /><br/>';
             echo '<input type="submit" value="Send" />';
             echo '</p>';
             echo '</form>';

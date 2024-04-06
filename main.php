@@ -3,6 +3,8 @@
     $metadata_path = dirname(__FILE__).'/.metadata';
     $uploads_path = dirname(__FILE__).'/uploads';
     $ignore_upload_path = true; // Always upload files to the $uploads_path.
+    $auto_mkdir = false; // Automatically create subfolders if they don't exist
+                         // instead of throwing an error.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,16 +32,18 @@
             if ($ignore_upload_path || $path == '')
             {
                 $upload_path = $uploads_path . "/" . $file['name'][0];
-                move_uploaded_file($file['tmp_name'][0], $upload_path);
-                return;
-            }else{
-                if (is_dir($path)) {
+            }
+            else
+            {
+                if (is_dir($path))
+                {
                     $upload_path = $path . "/" . $file['name'][0];
-                } else {
+                }
+                else
+                {
                     $upload_path = $path;
                 }
             }
-            var_dump($file['tmp_name']);
             return move_uploaded_file($file['tmp_name'][0], $upload_path);
         }
         if (isset($_GET['path']))
@@ -66,13 +70,16 @@
             foreach ($_FILES as $file) {
                 $result[] = upload_file($file, $path);
             }
-        }else{
+        } elseif (strtolower($action) == 'upload_form') {
             echo '<form action="" method="post" enctype="multipart/form-data">';
             echo '<p>File upload form:<br/>';
+            echo '<input type="text" name="path"/><br/>';
             echo '<input type="file" name="pictures[]" /><br/>';
             echo '<input type="submit" value="Send" />';
             echo '</p>';
             echo '</form>';
+        } else {
+
         }
 
         // if ($method == 'POST')

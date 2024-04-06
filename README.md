@@ -11,9 +11,9 @@ GET <your server>/main.php?path=<directory path>
 ```
 ### Uploading files
 ```
-GET <your server>/main.php?action=upload
+GET <your server>/main.php?action=upload_form
 ```
-The server will return a form for uploading the file.
+The server will return a form for uploading the file.<br/>
 *or*
 ```
 POST <your server>/main.php?path=<path of the uploaded file>

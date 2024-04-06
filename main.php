@@ -21,21 +21,27 @@
 
         if ($method == 'POST')
         {
-            if ($_FILES[])
+            $entityBody = file_get_contents('php://input');
+            echo $entityBody;
         }
-        if ($method == 'DELETE')
-        {
-            // Delete the file
-            if(unlink($path)) {
-                http_response_code(200);
-                echo 'Success.';
-            }
-            else
-            {
-                http_response_code(500);
-                echo 'Failure.';
-            }
-        }
+
+        // if ($method == 'POST')
+        // {
+        //     if ($_FILES[])
+        // }
+        // if ($method == 'DELETE')
+        // {
+        //     // Delete the file
+        //     if(unlink($path)) {
+        //         http_response_code(200);
+        //         echo 'Success.';
+        //     }
+        //     else
+        //     {
+        //         http_response_code(500);
+        //         echo 'Failure.';
+        //     }
+        // }
     ?>
 </body>
 </html>

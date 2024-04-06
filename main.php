@@ -23,6 +23,15 @@
         {
             $entityBody = file_get_contents('php://input');
             echo $entityBody;
+        }else{
+            echo '<form action="" method="post" enctype="multipart/form-data">';
+            echo '<p>File upload form:';
+            echo '<input type="file" name="pictures[]" />';
+            echo '<input type="file" name="pictures[]" />';
+            echo '<input type="file" name="pictures[]" />';
+            echo '<input type="submit" value="Send" />';
+            echo '</p>';
+            echo '</form>';
         }
 
         // if ($method == 'POST')

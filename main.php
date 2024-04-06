@@ -22,7 +22,7 @@
         if ($method == 'POST')
         {
             $entityBody = file_get_contents('php://input');
-            echo $entityBody;
+            var_dump($entityBody);
         }else{
             echo '<form action="" method="post" enctype="multipart/form-data">';
             echo '<p>File upload form:';

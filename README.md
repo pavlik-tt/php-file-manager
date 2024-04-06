@@ -4,7 +4,7 @@ HTTP file manager for PHP
 Can send, delete, modify, and receive files.
 
 ## Usage
-> ** Note: The path will start with $uploads_path regardless of whether the specified path is relative. **
+> **Note: The path will start with $uploads_path regardless of whether the specified path is relative.**
 ### Listing all files in directory
 ```
 GET <your server>/main.php?path=<directory path>
